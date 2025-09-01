@@ -1,6 +1,7 @@
 import cv2
 
 
+# image information
 def print_image_information(image):
     height, width, channels = image.shape
 
@@ -10,7 +11,7 @@ def print_image_information(image):
     print("Size (number of values):", image.size)
     print("Data type:", image.dtype)
 
-
+# camera information
 def print_cam_information():
     cam = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
@@ -25,7 +26,8 @@ def print_cam_information():
 
     cam.release()
 
-img = cv2.imread("lena-1.png")
-print_image_information(img)
 
-print_cam_information()
+if __name__ == "__main__":
+    img = cv2.imread("../resources/lena.png")
+    print_image_information(img)
+    print_cam_information()
