@@ -38,16 +38,12 @@ def hsv(image):
     cv2.imwrite("solutions/lena_hsv.png", hsv_image)
 
 # 7) color shift
-def hue_shifted(image, emptyPictureArray, hue):
-    height, width, channels = image.shape
-
-    for y in range(height):
-        for x in range(width):
-            for c in range(channels):
-                shifted_channel = (int(image[y, x, c]) + hue) % 256
-                emptyPictureArray[y, x, c] = shifted_channel
-
-    cv2.imwrite("solutions/lena_hue_shifted.png", emptyPictureArray)
+def hue_shifted(image, hue):
+    hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    h, s, v = cv2.split(hsv_image)
+    h = ((h.astype(np.int16) + hue) % 180).astype(np.uint8)
+    merged_image = cv2.merge([h, s, v])
+    cv2.imwrite("solutions/lena_hue_shifted.png", merged_image)
 
 # 8) smoothing
 def smoothing(image):
@@ -78,6 +74,6 @@ if __name__ == "__main__":
     copy(img, empty)
     grayscale(img)
     hsv(img)
-    hue_shifted(img, empty, 50)
+    hue_shifted(img, 50)
     smoothing(img)
     rotation(img, 90)
